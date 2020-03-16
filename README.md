@@ -1,6 +1,6 @@
 # Zip Files Action
 
-This GitHub action exposes the zip command for use in building/archiving.
+This GitHub action exposes the zip command for use in building/archiving. It is important to note that this action currently only supports Linux.
 
 ## Usage
 
