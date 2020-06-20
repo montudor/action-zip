@@ -1,0 +1,15 @@
+name: Create Zip File
+author: Monte Hellawell
+description: Create a zip file containing specific files from your repository
+inputs:
+  args:
+    description: zip or unzip, followed by the relevant options
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.args }}
+branding:
+  icon: 'folder-plus'  
+  color: 'gray-dark'
