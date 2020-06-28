@@ -17,7 +17,7 @@ Unzipping a `vendor.zip` file:
 ```yaml
 - uses: montudor/action-zip@v0.1.0
   with:
-    args: unzip -qq dir.zip -d ./dir
+    args: unzip -qq vendor.zip -d ./dir
 ```
 
 Reusing the same zip between steps in a `PHP` CI with unit and mutation tests:
