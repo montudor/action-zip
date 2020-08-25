@@ -4,26 +4,23 @@ This GitHub action exposes the zip command for use in building/archiving. It is 
 
 ## Usage
 
-Zipping the directory `vendor` into `vendor.zip`:
+Zipping the directory `dir` into `dir.zip`:
 
 ```yaml
 - uses: montudor/action-zip@v0.1.0
   with:
-    args: zip -qq -r ./dir.zip ./dir
+    args: zip -qq -r dir.zip dir
 ```
 
-Unzipping a `vendor.zip` file:
+Unzipping a `dir.zip` file:
 
 ```yaml
 - uses: montudor/action-zip@v0.1.0
   with:
-    args: unzip -qq dir.zip -d ./dir
+    args: unzip -qq dir.zip -d dir
 ```
 
 Reusing the same zip between steps in a `PHP` CI with unit and mutation tests:
-
-*Note that we're putting the zip in the `vendor-zip` directory, this is required 
-because the artifact upload/download expects a directory not a file.*
 
 ```yaml
 name: Continuous Integration
@@ -36,40 +33,34 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - run: composer install --ansi --no-progress --no-interaction --prefer-dist
-      - run: mkdir vendor-zip
       - uses: montudor/action-zip@v0.1.0
         with:
-          args: zip -qq -r ./vendor-zip/vendor.zip ./vendor
-      - uses: actions/upload-artifact@master
+          args: zip -qq -r vendor.zip vendor
+      - uses: actions/upload-artifact@v2
         with:
-          name: vendor
-          path: vendor-zip
+          name: vendor.zip
   tests:
     needs: composer-install
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: actions/download-artifact@master
+      - uses: actions/download-artifact@v2
         with:
-          name: vendor
-          path: vendor-zip
+          name: vendor.zip
       - uses: montudor/action-zip@v0.1.0
         with:
-          args: unzip -qq ./vendor-zip/vendor.zip -d ./vendor
-      - run: rm -Rf ./vendor-zip
+          args: unzip -qq vendor.zip -d vendor
       - run: ./vendor/bin/phpunit
   mutation:
     needs: composer-install
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: actions/download-artifact@master
+      - uses: actions/download-artifact@v2
         with:
-          name: vendor
-          path: vendor-zip
+          name: vendor.zip
       - uses: montudor/action-zip@v0.1.0
         with:
-          args: unzip -qq ./vendor-zip/vendor.zip -d ./vendor
-      - run: rm -Rf ./vendor-zip
+          args: unzip -qq vendor.zip -d vendor
       - run: ./vendor/bin/infection
 ```
