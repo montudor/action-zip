@@ -1,0 +1,5 @@
+name: "action-zip"
+description: "This GitHub action exposes the zip command for use in building/archiving. It is important to note that this action currently only supports Linux."
+runs:
+  using: "docker"
+  image: "Dockerfile"
