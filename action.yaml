@@ -4,3 +4,6 @@ description: "This GitHub action exposes the zip command for use in building/arc
 runs:
   using: "docker"
   image: "Dockerfile"
+inputs:
+  args:
+    description: "See montudor/action-zip README.md for more info"
