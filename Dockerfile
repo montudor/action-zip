@@ -1,4 +1,4 @@
-FROM alpine:3.10.1
+FROM alpine
 
 LABEL "com.github.actions.name"="Create Zip File"
 LABEL "com.github.actions.description"="Create a zip file containing specific files from your repository"
