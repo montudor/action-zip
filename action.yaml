@@ -11,3 +11,6 @@ inputs:
   args:
     description: "See montudor/action-zip README.md for more info"
     required: false
+  working-directory:
+    description: "Directory to run the command in, relative to the workspace"
+    required: false

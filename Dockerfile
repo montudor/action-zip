@@ -10,3 +10,6 @@ LABEL "homepage"="https://github.com/montudor/action-zip"
 LABEL "maintainer"="Monte Hellawell <monte@montudor.com>"
 
 RUN apk add zip
+
+COPY entrypoint.sh /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]

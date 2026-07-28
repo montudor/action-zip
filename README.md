@@ -20,15 +20,14 @@ Unzipping a `dir.zip` file:
     args: unzip -qq dir.zip -d dir
 ```
 
-Zipping a folder from a different work dir
+Zipping a folder from a different work dir.
 
 ```yaml
-- name: Install zip
-  uses: montudor/action-zip@v1
-
 - name: Zip output
-  run: zip -qq -r function.zip dist node_modules package.json
-  working-directory: path/to/work-dir
+  uses: montudor/action-zip@v1
+  with:
+    args: zip -qq -r function.zip dist node_modules package.json
+    working-directory: path/to/work-dir
 ```
 
 Reusing the same zip between steps in a `PHP` CI with unit and mutation tests:
