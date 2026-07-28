@@ -1,0 +1,50 @@
+name: Test
+on:
+  push:
+  pull_request:
+jobs:
+  zip-with-working-directory:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create test files
+        run: |
+          mkdir -p work-dir/dist
+          echo hi > work-dir/dist/a.txt
+      - name: Zip from work dir
+        uses: ./
+        with:
+          args: zip -qq -r out.zip dist
+          working-directory: work-dir
+      - name: Verify zip contents
+        run: |
+          test -f work-dir/out.zip
+          unzip -l work-dir/out.zip | grep -q 'dist/a.txt'
+
+  zip-without-working-directory:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create test files
+        run: |
+          mkdir -p dir
+          echo hi > dir/a.txt
+      - name: Zip
+        uses: ./
+        with:
+          args: zip -qq -r dir.zip dir
+      - name: Unzip
+        uses: ./
+        with:
+          args: unzip -qq dir.zip -d out
+      - name: Verify
+        run: |
+          test -f dir.zip
+          cmp dir/a.txt out/dir/a.txt
+
+  no-args:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run action with no args
+        uses: ./
